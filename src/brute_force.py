@@ -20,7 +20,7 @@ class BruteforceKnapsackSolver(KnapsackSolver):
     
     def __init__(self, instance) -> None:
         # TODO: write the constructor by calling the parent class constructor
-        ...
+        super().__init__(instance)
 
     
     def solve(self) -> tuple[int, ...]:
