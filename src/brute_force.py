@@ -25,6 +25,16 @@ class BruteforceKnapsackSolver(KnapsackSolver):
     
     def solve(self) -> tuple[int, ...]:
         # solve by brute force
-        sol = (0,)
-        
-        return sol
+        n = len(self._inst.W)
+        best_val = 0
+        best_sol = tuple(0 for _ in range(n))
+
+        for comb in product([0, 1], repeat=n):
+            total_weight = sum(w * x for w, x in zip(self._inst.W, comb))
+            if total_weight <= self._inst.C:
+                total_value = sum(v * x for v, x in zip(self._inst.V, comb))
+                if total_value > best_val:
+                    best_val = total_value
+                    best_sol = comb
+
+        return best_sol
