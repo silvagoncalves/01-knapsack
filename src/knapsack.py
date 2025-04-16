@@ -74,6 +74,11 @@ class KnapsackSolver:
             (i, self._inst.V[i], self._inst.W[i], self._inst.V[i] / self._inst.W[i])
             for i in range(self._inst.size)
         ]
+
+        items.sort(key=lambda item: item[3], reverse=True)
+
+        total_weight = 0
+        total_value = 0
         raise NotImplementedError
 
     def weight(self, X: tuple[int, ...]) -> int:
