@@ -70,6 +70,10 @@ class KnapsackSolver:
         Solves the loaded instance and returns the assignment to the decision
         variables
         """
+        items = [
+            (i, self._inst.V[i], self._inst.W[i], self._inst.V[i] / self._inst.W[i])
+            for i in range(self._inst.size)
+        ]
         raise NotImplementedError
 
     def weight(self, X: tuple[int, ...]) -> int:
