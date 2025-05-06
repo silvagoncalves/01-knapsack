@@ -66,20 +66,32 @@ class KnapsackSolver:
         self._X: list[int] = [0] * self._inst.size
 
     def solve(self) -> tuple[int, ...]:
-        """
-        Solves the loaded instance and returns the assignment to the decision
-        variables
-        """
-        items = [
-            (i, self._inst.V[i], self._inst.W[i], self._inst.V[i] / self._inst.W[i])
-            for i in range(self._inst.size)
-        ]
+    """
+    Solve the knapsack problem using a greedy strategy:
+    - Sort items by value-to-weight ratio in descending order
+    - Add items to the knapsack as long as the total weight allows
+    """
+    # Créer une liste d’items sous forme : (index, valeur, poids, ratio)
+    items = [
+        (i, self._inst.V[i], self._inst.W[i], self._inst.V[i] / self._inst.W[i])
+        for i in range(self._inst.size)
+    ]
 
-        items.sort(key=lambda item: item[3], reverse=True)
+    # Trier les items par ratio décroissant (plus rentable en premier)
+    items.sort(key=lambda item: item[3], reverse=True)
 
-        total_weight = 0
-        total_value = 0
-        raise NotImplementedError
+    total_weight = 0
+    X = [0] * self._inst.size  # Solution initiale (0 = non pris)
+
+    # Parcourir les items triés
+    for i, value, weight, ratio in items:
+        if total_weight + weight <= self._inst.C:
+            X[i] = 1  # On prend cet objet
+            total_weight += weight
+        else:
+            X[i] = 0  # Trop lourd, on ne prend pas
+
+    return tuple(X)
 
     def weight(self, X: tuple[int, ...]) -> int:
         """
